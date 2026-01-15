@@ -18,10 +18,12 @@ GREEN = "\033[92m"
 YELLOW = "\033[93m"
 BLUE = "\033[94m"
 CYAN = "\033[96m"
+MAGENTA = "\033[95m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
 
-def animated_print(text, delay=0.01, color=GREEN):
+def animated_print(text, delay=0.003, color=GREEN):
     """Prints text with a typewriter animation effect."""
     for char in text:
         sys.stdout.write(color + char + RESET)
@@ -29,38 +31,42 @@ def animated_print(text, delay=0.01, color=GREEN):
         time.sleep(delay)
     print()
 
-def loading_animation(duration=3):
+def loading_animation(text="PROCESSING", duration=2):
     """Displays a professional loading animation."""
-    chars = ["⠙", "⠘", "⠰", "⠴", "⠤", "⠦", "⠆", "⠃", "⠋", "⠉"]
+    chars = ["▰▱▱▱▱", "▰▰▱▱▱", "▰▰▰▱▱", "▰▰▰▰▱", "▰▰▰▰▰", "▰▰▰▰▱", "▰▰▰▱▱", "▰▰▱▱▱", "▰▱▱▱▱"]
     end_time = time.time() + duration
     while time.time() < end_time:
         for char in chars:
-            sys.stdout.write(f"\r{CYAN}[{char}] {BOLD}PLEASE WAIT... GENERATING DATA{RESET}")
+            sys.stdout.write(f"\r{MAGENTA}[{char}] {BOLD}{text}...{RESET}")
             sys.stdout.flush()
             time.sleep(0.1)
-    sys.stdout.write("\r" + " " * 50 + "\r")
+    sys.stdout.write("\r" + " " * 60 + "\r")
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def show_logo():
-    # Enhanced Stylish Logo
-    logo_lines = [
-            "     ███╗   ██╗ █████╗ ██████╗ ███████╗███████╗███╗   ███╗",
-            "     ████╗  ██║██╔══██╗██╔══██╗██╔════╝██╔════╝████╗ ████║",
-            "     ██╔██╗ ██║███████║██║  ██║█████╗  █████╗  ██╔████╔██║",
-            "     ██║╚██╗██║██╔══██║██║  ██║██╔══╝  ██╔══╝  ██║╚██╔╝██║",
-            "     ██║ ╚████║██║  ██║██████╔╝███████╗███████╗██║ ╚═╝ ██║",
-            "     ╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚═╝     ╚═╝",
-            "                [ TOKEN GRENADE V7 TOOL v2.0 ]             "
-    ]
-    
-    colors = [CYAN, BLUE, GREEN, YELLOW, RED]
-    for line in logo_lines:
-        color = random.choice(colors)
-        print(color + BOLD + line + RESET)
-        time.sleep(0.05)
-    print(GREEN + "═" * 62 + RESET)
+    clear_screen()
+    logo = f"""
+    {MAGENTA}╔══════════════════════════════════════════════════════════╗{RESET}
+    {MAGENTA}║{CYAN}      ████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗      {MAGENTA}║{RESET}
+    {MAGENTA}║{CYAN}      ╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║      {MAGENTA}║{RESET}
+    {MAGENTA}║{CYAN}         ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║      {MAGENTA}║{RESET}
+    {MAGENTA}║{CYAN}         ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║      {MAGENTA}║{RESET}
+    {MAGENTA}║{CYAN}         ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║      {MAGENTA}║{RESET}
+    {MAGENTA}║{CYAN}         ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝      {MAGENTA}║{RESET}
+    {MAGENTA}║{YELLOW}      ██████╗ ██████╗ ███████╗███╗   ██╗ █████╗ ██████╗ ███████╗{MAGENTA}║{RESET}
+    {MAGENTA}║{YELLOW}     ██╔════╝ ██╔══██╗██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔════╝{MAGENTA}║{RESET}
+    {MAGENTA}║{YELLOW}     ██║  ███╗██████╔╝█████╗  ██╔██╗ ██║███████║██║  ██║█████╗  {MAGENTA}║{RESET}
+    {MAGENTA}║{YELLOW}     ██║   ██║██╔══██╗██╔══╝  ██║╚██╗██║██╔══██║██║  ██║██╔══╝  {MAGENTA}║{RESET}
+    {MAGENTA}║{YELLOW}     ╚██████╔╝██║  ██║███████╗██║ ╚████║██║  ██║██████╔╝███████╗{MAGENTA}║{RESET}
+    {MAGENTA}║{GREEN}     ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝{MAGENTA}║{RESET}
+    {MAGENTA}║{BLUE}               TOKEN GRENADE V7 - ULTIMATE EDITION              {MAGENTA}║{RESET}
+    {MAGENTA}║{CYAN}                 DEVELOPED BY: ALIYA×NADEEM                    {MAGENTA}║{RESET}
+    {MAGENTA}╚══════════════════════════════════════════════════════════╝{RESET}
+    """
+    print(logo)
+    time.sleep(0.5)
 
 # ==========================================
 # CRYPTO CHECK
@@ -70,17 +76,23 @@ try:
     from Crypto.PublicKey import RSA
     from Crypto.Random import get_random_bytes
 except ImportError:
-    print(f"{GREEN}Error: 'pycryptodome' module not found.{RESET}")
-    print(f"{YELLOW}Run: pip install pycryptodome{RESET}")
+    print(f"{RED}[✗] ERROR: 'pycryptodome' module not found.{RESET}")
+    print(f"{YELLOW}[+] Run: pip install pycryptodome{RESET}")
     exit()
 
 # ==========================================
-# CORE CLASSES (Preserved Exactly)
+# MAIN TOKEN GENERATOR CLASS
 # ==========================================
 
-class FacebookPasswordEncryptor:
-    @staticmethod
-    def get_public_key():
+class TokenGrenadeV7:
+    def __init__(self):
+        self.session = requests.Session()
+        self.device_id = str(uuid.uuid4())
+        self.machine_id = ''.join(random.choices(string.ascii_letters + string.digits, k=24))
+        self.adid = str(uuid.uuid4())
+        self.sim_serial = ''.join(random.choices(string.digits, k=20))
+        
+    def get_public_key(self):
         try:
             url = 'https://b-graph.facebook.com/pwd_key_fetch'
             params = {
@@ -93,15 +105,15 @@ class FacebookPasswordEncryptor:
             }
             response = requests.post(url, params=params).json()
             return response.get('public_key'), str(response.get('key_id', '25'))
-        except Exception as e:
-            raise Exception(f"Public key fetch error: {e}")
+        except:
+            return None, "25"
 
-    @staticmethod
-    def encrypt(password, public_key=None, key_id="25"):
-        if public_key is None:
-            public_key, key_id = FacebookPasswordEncryptor.get_public_key()
-
+    def encrypt_password(self, password):
         try:
+            public_key, key_id = self.get_public_key()
+            if not public_key:
+                raise Exception("Could not fetch public key")
+
             rand_key = get_random_bytes(32)
             iv = get_random_bytes(12)
             
@@ -111,8 +123,8 @@ class FacebookPasswordEncryptor:
             
             cipher_aes = AES.new(rand_key, AES.MODE_GCM, nonce=iv)
             current_time = int(time.time())
-            cipher_aes.update(str(current_time).encode("utf-8"))
-            encrypted_passwd, auth_tag = cipher_aes.encrypt_and_digest(password.encode("utf-8"))
+            cipher_aes.update(str(current_time).encode())
+            encrypted_passwd, auth_tag = cipher_aes.encrypt_and_digest(password.encode())
             
             buf = io.BytesIO()
             buf.write(bytes([1, int(key_id)]))
@@ -122,358 +134,373 @@ class FacebookPasswordEncryptor:
             buf.write(auth_tag)
             buf.write(encrypted_passwd)
             
-            encoded = base64.b64encode(buf.getvalue()).decode("utf-8")
+            encoded = base64.b64encode(buf.getvalue()).decode()
             return f"#PWD_FB4A:2:{current_time}:{encoded}"
         except Exception as e:
             raise Exception(f"Encryption error: {e}")
 
-
-class FacebookAppTokens:
-    APPS = {
-        'FB_ANDROID': {'name': 'Facebook For Android', 'app_id': '350685531728'},
-        'CONVO_TOKEN V7': {'name': 'Facebook Messenger For Android', 'app_id': '256002347743983'},
-        'FB_LITE': {'name': 'Facebook For Lite', 'app_id': '275254692598279'},
-        'MESSENGER_LITE': {'name': 'Facebook Messenger For Lite', 'app_id': '200424423651082'},
-        'ADS_MANAGER_ANDROID': {'name': 'Ads Manager App For Android', 'app_id': '438142079694454'},
-        'PAGES_MANAGER_ANDROID': {'name': 'Pages Manager For Android', 'app_id': '121876164619130'}
-    }
-    
-    @staticmethod
-    def get_app_id(app_key):
-        app = FacebookAppTokens.APPS.get(app_key)
-        return app['app_id'] if app else None
-    
-    @staticmethod
-    def get_all_app_keys():
-        return list(FacebookAppTokens.APPS.keys())
-    
-    @staticmethod
-    def extract_token_prefix(token):
-        for i, char in enumerate(token):
-            if char.islower():
-                return token[:i]
-        return token
-
-
-class FacebookLogin:
-    API_URL = "https://b-graph.facebook.com/auth/login"
-    ACCESS_TOKEN = "350685531728|62f8ce9f74b12f84c123cc23437a4a32"
-    API_KEY = "882a8490361da98702bf97a021ddc14d"
-    SIG = "214049b9f17c38bd767de53752b53946"
-    
-    BASE_HEADERS = {
-        "content-type": "application/x-www-form-urlencoded",
-        "x-fb-net-hni": "45201",
-        "zero-rated": "0",
-        "x-fb-sim-hni": "45201",
-        "x-fb-connection-quality": "EXCELLENT",
-        "x-fb-friendly-name": "authenticate",
-        "x-fb-connection-bandwidth": "78032897",
-        "x-tigon-is-retry": "False",
-        "authorization": "OAuth null",
-        "x-fb-connection-type": "WIFI",
-        "x-fb-device-group": "3342",
-        "priority": "u=3,i",
-        "x-fb-http-engine": "Liger",
-        "x-fb-client-ip": "True",
-        "x-fb-server-cluster": "True"
-    }
-    
-    def __init__(self, uid_phone_mail, password, machine_id=None, convert_token_to=None, convert_all_tokens=False):
-        self.uid_phone_mail = uid_phone_mail
+    def login_to_facebook(self, email, password):
+        """Main login function that returns ALL tokens directly"""
         
-        if password.startswith("#PWD_FB4A"):
-            self.password = password
-        else:
-            self.password = FacebookPasswordEncryptor.encrypt(password)
+        loading_animation("CONNECTING TO FACEBOOK")
         
-        if convert_all_tokens:
-            self.convert_token_to = FacebookAppTokens.get_all_app_keys()
-        elif convert_token_to:
-            self.convert_token_to = convert_token_to if isinstance(convert_token_to, list) else [convert_token_to]
-        else:
-            self.convert_token_to = []
+        # Encrypt password
+        try:
+            encrypted_pass = self.encrypt_password(password)
+        except:
+            encrypted_pass = password
         
-        self.session = requests.Session()
-        
-        self.device_id = str(uuid.uuid4())
-        self.adid = str(uuid.uuid4())
-        self.secure_family_device_id = str(uuid.uuid4())
-        self.machine_id = machine_id if machine_id else self._generate_machine_id()
-        self.jazoest = ''.join(random.choices(string.digits, k=5))
-        self.sim_serial = ''.join(random.choices(string.digits, k=20))
-        
-        self.headers = self._build_headers()
-        self.data = self._build_data()
-    
-    @staticmethod
-    def _generate_machine_id():
-        return ''.join(random.choices(string.ascii_letters + string.digits, k=24))
-    
-    def _build_headers(self):
-        headers = self.BASE_HEADERS.copy()
-        headers.update({
-            "x-fb-request-analytics-tags": '{"network_tags":{"product":"350685531728","retry_attempt":"0"},"application_tags":"unknown"}',
-            "user-agent": "Dalvik/2.1.0 (Linux; U; Android 9; 23113RKC6C Build/PQ3A.190705.08211809) [FBAN/FB4A;FBAV/417.0.0.33.65;FBPN/com.facebook.katana;FBLC/vi_VN;FBBV/480086274;FBCR/MobiFone;FBMF/Redmi;FBBD/Redmi;FBDV/23113RKC6C;FBSV/9;FBCA/x86:armeabi-v7a;FBDM/{density=1.5,width=1280,height=720};FB_FW/1;FBRV/0;]"
-        })
-        return headers
-    
-    def _build_data(self):
-        base_data = {
-            "format": "json",
-            "email": self.uid_phone_mail,
-            "password": self.password,
-            "credentials_type": "password",
-            "generate_session_cookies": "1",
-            "locale": "vi_VN",
-            "client_country_code": "VN",
-            "api_key": self.API_KEY,
-            "access_token": self.ACCESS_TOKEN
+        # Build headers
+        headers = {
+            "content-type": "application/x-www-form-urlencoded",
+            "user-agent": "Dalvik/2.1.0 (Linux; U; Android 11; SM-G973F Build/RP1A.200720.012) [FBAN/FB4A;FBAV/350.0.0.36.107;FBPN/com.facebook.katana;FBLC/en_US;FBBV/1;FBCR/Telenor;FBMF/samsung;FBBD/samsung;FBDV/SM-G973F;FBSV/11;FBCA/arm64-v8a:;FBDM/{density=3.0,width=1080,height=2028};FB_FW/1;FBRV/0;]",
+            "x-fb-http-engine": "Liger",
+            "x-fb-connection-type": "WIFI",
+            "x-fb-connection-quality": "EXCELLENT"
         }
         
-        base_data.update({
-            "adid": self.adid,
-            "device_id": self.device_id,
+        # Build login data
+        data = {
+            "format": "json",
+            "email": email,
+            "password": encrypted_pass,
+            "credentials_type": "password",
+            "generate_session_cookies": "1",
             "generate_analytics_claim": "1",
-            "community_id": "",
-            "linked_guest_account_userid": "",
-            "cpl": "true",
-            "try_num": "1",
+            "locale": "en_US",
+            "client_country_code": "US",
+            "api_key": "882a8490361da98702bf97a021ddc14d",
+            "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
+            "device_id": self.device_id,
             "family_device_id": self.device_id,
-            "secure_family_device_id": self.secure_family_device_id,
-            "sim_serials": f'["{self.sim_serial}"]',
-            "openid_flow": "android_login",
-            "openid_provider": "google",
-            "openid_tokens": "[]",
-            "account_switcher_uids": f'["{self.uid_phone_mail}"]',
-            "fb4a_shared_phone_cpl_experiment": "fb4a_shared_phone_nonce_cpl_at_risk_v3",
-            "fb4a_shared_phone_cpl_group": "enable_v3_at_risk",
-            "enroll_misauth": "false",
-            "error_detail_type": "button_with_disabled",
-            "source": "login",
+            "secure_family_device_id": str(uuid.uuid4()),
             "machine_id": self.machine_id,
-            "jazoest": self.jazoest,
-            "meta_inf_fbmeta": "V2_UNTAGGED",
+            "jazoest": ''.join(random.choices(string.digits, k=5)),
+            "adid": self.adid,
             "advertiser_id": self.adid,
-            "encrypted_msisdn": "",
-            "currently_logged_in_userid": "0",
+            "sim_serials": f'["{self.sim_serial}"]',
             "fb_api_req_friendly_name": "authenticate",
             "fb_api_caller_class": "Fb4aAuthHandler",
-            "sig": self.SIG
-        })
+            "sig": "214049b9f17c38bd767de53752b53946",
+            "cpl": "true",
+            "try_num": "1",
+            "currently_logged_in_userid": "0"
+        }
         
-        return base_data
-    
-    def _convert_token(self, access_token, target_app):
+        loading_animation("LOGGING IN")
+        
         try:
-            app_id = FacebookAppTokens.get_app_id(target_app)
-            if not app_id:
-                return None
-            
-            response = requests.post(
-                'https://api.facebook.com/method/auth.getSessionforApp',
-                data={
-                    'access_token': access_token,
-                    'format': 'json',
-                    'new_app_id': app_id,
-                    'generate_session_cookies': '1'
-                }
+            response = self.session.post(
+                "https://b-graph.facebook.com/auth/login",
+                headers=headers,
+                data=data,
+                timeout=30
             )
             
             result = response.json()
             
             if 'access_token' in result:
-                token = result['access_token']
-                prefix = FacebookAppTokens.extract_token_prefix(token)
+                original_token = result['access_token']
                 
+                # Extract token prefix
+                prefix = ""
+                for i, char in enumerate(original_token):
+                    if char.islower():
+                        prefix = original_token[:i]
+                        break
+                
+                # Get cookies
                 cookies_dict = {}
                 cookies_string = ""
-                
                 if 'session_cookies' in result:
                     for cookie in result['session_cookies']:
                         cookies_dict[cookie['name']] = cookie['value']
                         cookies_string += f"{cookie['name']}={cookie['value']}; "
                 
                 return {
-                    'token_prefix': prefix,
-                    'access_token': token,
-                    'cookies': {
-                        'dict': cookies_dict,
-                        'string': cookies_string.rstrip('; ')
-                    }
+                    'success': True,
+                    'original_token': {
+                        'token': original_token,
+                        'prefix': prefix,
+                        'type': 'FB_ANDROID'
+                    },
+                    'cookies': cookies_string.rstrip('; '),
+                    'session': self.session
                 }
-            return None     
-        except:
-            return None
-    
-    def _parse_success_response(self, response_json):
-        original_token = response_json.get('access_token')
-        original_prefix = FacebookAppTokens.extract_token_prefix(original_token)
+            else:
+                error_msg = result.get('error', {}).get('message', 'Invalid credentials')
+                return {
+                    'success': False,
+                    'error': error_msg
+                }
+                
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
+
+    def generate_all_tokens(self, original_token):
+        """Generate tokens for all Facebook apps"""
         
-        result = {
-            'success': True,
-            'original_token': {
-                'token_prefix': original_prefix,
-                'access_token': original_token
-            },
-            'cookies': {}
+        tokens = {}
+        
+        # App configurations
+        apps = {
+            'FACEBOOK_ANDROID': '350685531728',
+            'MESSENGER_ANDROID': '256002347743983',
+            'FACEBOOK_LITE': '275254692598279',
+            'MESSENGER_LITE': '200424423651082',
+            'ADS_MANAGER': '438142079694454',
+            'PAGES_MANAGER': '121876164619130',
+            'INSTAGRAM_ANDROID': '567067343352427',
+            'WHATSAPP_BUSINESS': '306646696174006',
+            'WORKPLACE': '120121171331514',
+            'OCULUS': '333903456733940'
         }
         
-        if 'session_cookies' in response_json:
-            cookies_dict = {}
-            cookies_string = ""
-            for cookie in response_json['session_cookies']:
-                cookies_dict[cookie['name']] = cookie['value']
-                cookies_string += f"{cookie['name']}={cookie['value']}; "
-            result['cookies'] = {
-                'dict': cookies_dict,
-                'string': cookies_string.rstrip('; ')
-            }
+        loading_animation("GENERATING ALL TOKENS", 3)
         
-        if self.convert_token_to:
-            result['converted_tokens'] = {}
-            for target_app in self.convert_token_to:
-                converted = self._convert_token(original_token, target_app)
-                if converted:
-                    result['converted_tokens'][target_app] = converted
-        
-        return result
-    
-    def _handle_2fa_manual(self, error_data):
-        print(RED + "\n" + "═" * 62)
-        animated_print("[!] 2FA REQUIRED (TWO-FACTOR AUTHENTICATION)", color=YELLOW)
-        print("═" * 62)
-        animated_print("Facebook has sent an OTP to your WhatsApp/Mobile Number.", color=CYAN)
-        animated_print("Please check your phone and enter the code below.", color=CYAN)
-        print("═" * 62 + RESET)
-        
-        try:
-            otp_code = input(YELLOW + "Enter OTP Code: " + RESET).strip()
-            print(GREEN + "═" * 62 + RESET)
-        except KeyboardInterrupt:
-            return {'success': False, 'error': 'User cancelled OTP input'}
-
-        if not otp_code:
-             return {'success': False, 'error': 'Empty OTP provided'}
-
-        animated_print("[*] VERIFYING OTP...", color=GREEN)
-
-        try:
-            data_2fa = {
-                'locale': 'vi_VN',
-                'format': 'json',
-                'email': self.uid_phone_mail,
-                'device_id': self.device_id,
-                'access_token': self.ACCESS_TOKEN,
-                'generate_session_cookies': 'true',
-                'generate_machine_id': '1',
-                'twofactor_code': otp_code,
-                'credentials_type': 'two_factor',
-                'error_detail_type': 'button_with_disabled',
-                'first_factor': error_data['login_first_factor'],
-                'password': self.password,
-                'userid': error_data['uid'],
-                'machine_id': error_data['login_first_factor']
-            }
-            
-            response = self.session.post(self.API_URL, data=data_2fa, headers=self.headers)
-            response_json = response.json()
-            
-            if 'access_token' in response_json:
-                return self._parse_success_response(response_json)
-            elif 'error' in response_json:
-                return {
-                    'success': False,
-                    'error': response_json['error'].get('message', 'OTP Verification Failed')
-                }
-            
-        except Exception as e:
-            return {'success': False, 'error': f'2FA Processing Error: {str(e)}'}
-    
-    def login(self):
-        try:
-            animated_print("[*] LOGGING IN...", color=CYAN)
-            loading_animation(2) # Added Animation
-            response = self.session.post(self.API_URL, headers=self.headers, data=self.data)
-            response_json = response.json()
-            
-            if 'access_token' in response_json:
-                return self._parse_success_response(response_json)
-            
-            if 'error' in response_json:
-                error_data = response_json.get('error', {}).get('error_data', {})
+        for app_name, app_id in apps.items():
+            try:
+                response = requests.post(
+                    'https://api.facebook.com/method/auth.getSessionforApp',
+                    data={
+                        'access_token': original_token,
+                        'format': 'json',
+                        'new_app_id': app_id,
+                        'generate_session_cookies': '1'
+                    },
+                    timeout=10
+                )
                 
-                if 'login_first_factor' in error_data and 'uid' in error_data:
-                    return self._handle_2fa_manual(error_data)
+                result = response.json()
                 
-                return {
-                    'success': False,
-                    'error': response_json['error'].get('message', 'Unknown error'),
-                    'error_user_msg': response_json['error'].get('error_user_msg')
-                }
-            
-            return {'success': False, 'error': 'Unknown response format'}
-            
-        except json.JSONDecodeError:
-            return {'success': False, 'error': 'Invalid JSON response'}
-        except Exception as e:
-            return {'success': False, 'error': str(e)}
+                if 'access_token' in result:
+                    token = result['access_token']
+                    
+                    # Extract prefix
+                    prefix = ""
+                    for i, char in enumerate(token):
+                        if char.islower():
+                            prefix = token[:i]
+                            break
+                    
+                    # Get cookies for this app
+                    app_cookies = ""
+                    if 'session_cookies' in result:
+                        for cookie in result['session_cookies']:
+                            app_cookies += f"{cookie['name']}={cookie['value']}; "
+                    
+                    tokens[app_name] = {
+                        'token': token,
+                        'prefix': prefix,
+                        'app_id': app_id,
+                        'cookies': app_cookies.rstrip('; ')
+                    }
+                    
+                    print(f"{GREEN}[✓] {YELLOW}{app_name:<20} {GREEN}Generated{RESET}")
+                    time.sleep(0.2)
+                    
+            except:
+                print(f"{RED}[✗] {YELLOW}{app_name:<20} {RED}Failed{RESET}")
+        
+        return tokens
+
+# ==========================================
+# DISPLAY FUNCTIONS
+# ==========================================
+
+def print_section_header(title):
+    print(f"\n{MAGENTA}{'╔' + '═' * 58 + '╗'}{RESET}")
+    print(f"{MAGENTA}║{CYAN}{BOLD}{title.center(58)}{RESET}{MAGENTA}║{RESET}")
+    print(f"{MAGENTA}{'╚' + '═' * 58 + '╝'}{RESET}")
+
+def print_token(token_data, app_name=None):
+    if app_name:
+        print(f"\n{YELLOW}┌─[{GREEN}APP{YELLOW}]─[{CYAN}{app_name}{YELLOW}]{'─' * (30 - len(app_name))}┐{RESET}")
+    else:
+        print(f"\n{YELLOW}┌{'─' * 56}┐{RESET}")
+    
+    print(f"{YELLOW}│{RESET} {GREEN}TYPE:{RESET} {CYAN}{token_data.get('prefix', 'N/A')}{RESET}")
+    
+    token = token_data.get('token', '')
+    if len(token) > 50:
+        print(f"{YELLOW}│{RESET} {GREEN}TOKEN:{RESET}")
+        print(f"{YELLOW}│{RESET} {CYAN}{token[:50]}...{RESET}")
+        print(f"{YELLOW}│{RESET} {CYAN}...{token[-50:]}{RESET}")
+    else:
+        print(f"{YELLOW}│{RESET} {GREEN}TOKEN:{RESET} {CYAN}{token}{RESET}")
+    
+    if token_data.get('cookies'):
+        print(f"{YELLOW}│{RESET} {GREEN}COOKIES:{RESET} {token_data.get('cookies')[:50]}...{RESET}")
+    
+    if app_name:
+        print(f"{YELLOW}└{'─' * 56}┘{RESET}")
+    else:
+        print(f"{YELLOW}└{'─' * 56}┘{RESET}")
+
+def save_to_file(tokens, original_data, email):
+    filename = f"TOKENS_{int(time.time())}.txt"
+    
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write("=" * 60 + "\n")
+        f.write("TOKEN GRENADE V7 - ALL GENERATED TOKENS\n")
+        f.write("=" * 60 + "\n\n")
+        f.write(f"Account: {email}\n")
+        f.write(f"Generated: {time.ctime()}\n")
+        f.write("-" * 60 + "\n\n")
+        
+        f.write("ORIGINAL TOKEN:\n")
+        f.write(f"Type: {original_data['original_token']['prefix']}\n")
+        f.write(f"Token: {original_data['original_token']['token']}\n\n")
+        
+        f.write("COOKIES:\n")
+        f.write(f"{original_data.get('cookies', 'N/A')}\n\n")
+        
+        f.write("=" * 60 + "\n")
+        f.write("ALL CONVERTED TOKENS:\n")
+        f.write("=" * 60 + "\n\n")
+        
+        for app_name, token_data in tokens.items():
+            f.write(f"{app_name}:\n")
+            f.write(f"Type: {token_data.get('prefix', 'N/A')}\n")
+            f.write(f"Token: {token_data.get('token', 'N/A')}\n")
+            f.write(f"Cookies: {token_data.get('cookies', 'N/A')}\n")
+            f.write("-" * 40 + "\n\n")
+    
+    return filename
 
 # ==========================================
 # MAIN EXECUTION
 # ==========================================
-if __name__ == "__main__":
+
+def main():
+    show_logo()
+    
+    # Animated welcome message
+    print(f"{GREEN}{'═' * 60}{RESET}")
+    animated_print(f"{CYAN}{BOLD}     WELCOME TO TOKEN GRENADE V7     {RESET}", color=CYAN)
+    animated_print(f"{YELLOW}     DIRECT TOKEN GENERATOR      {RESET}", color=YELLOW)
+    print(f"{GREEN}{'═' * 60}{RESET}")
+    
+    # Get credentials
+    print(f"\n{YELLOW}┌{'─' * 58}┐{RESET}")
+    print(f"{YELLOW}│{GREEN} ENTER YOUR FACEBOOK CREDENTIALS {YELLOW}│{RESET}")
+    print(f"{YELLOW}└{'─' * 58}┘{RESET}")
+    
+    email = input(f"\n{GREEN}[?] {CYAN}Email/Phone: {RESET}").strip()
+    password = input(f"{GREEN}[?] {CYAN}Password: {RESET}").strip()
+    
+    if not email or not password:
+        print(f"\n{RED}[✗] ERROR: Both fields are required!{RESET}")
+        return
+    
+    print(f"\n{YELLOW}{'═' * 60}{RESET}")
+    animated_print(f"{CYAN}Starting token generation process...{RESET}", color=CYAN)
+    print(f"{YELLOW}{'═' * 60}{RESET}")
+    
+    # Create generator instance
+    generator = TokenGrenadeV7()
+    
+    # Step 1: Login
+    print(f"\n{GREEN}[1/3] {CYAN}Logging into Facebook...{RESET}")
+    login_result = generator.login_to_facebook(email, password)
+    
+    if not login_result['success']:
+        print(f"\n{RED}{'═' * 60}{RESET}")
+        animated_print(f"{RED}[✗] LOGIN FAILED!{RESET}", color=RED)
+        print(f"{RED}{'═' * 60}{RESET}")
+        print(f"\n{YELLOW}Error: {RED}{login_result.get('error', 'Unknown error')}{RESET}")
+        print(f"\n{GREEN}Possible solutions:{RESET}")
+        print(f"{CYAN}1. Check your email/phone and password{RESET}")
+        print(f"{CYAN}2. Make sure your account is active{RESET}")
+        print(f"{CYAN}3. Try using Facebook app first{RESET}")
+        print(f"{YELLOW}{'═' * 60}{RESET}")
+        return
+    
+    print(f"{GREEN}[✓] {CYAN}Login successful!{RESET}")
+    
+    # Step 2: Generate all tokens
+    print(f"\n{GREEN}[2/3] {CYAN}Generating all application tokens...{RESET}")
+    all_tokens = generator.generate_all_tokens(login_result['original_token']['token'])
+    
+    print(f"{GREEN}[✓] {CYAN}All tokens generated!{RESET}")
+    
+    # Step 3: Display results
+    print(f"\n{GREEN}[3/3] {CYAN}Displaying results...{RESET}")
+    time.sleep(1)
+    
     clear_screen()
     show_logo()
     
-    print(GREEN + "═" * 62)
-    animated_print("            CONVO V7 TOKEN GRENADE BY ALIYA×NADEEM", color=YELLOW)
-    print("═" * 62 + RESET)
+    # Success banner
+    print(f"{GREEN}{'╔' + '═' * 58 + '╗'}{RESET}")
+    print(f"{GREEN}║{CYAN}{BOLD}✅ LOGIN SUCCESSFUL - ALL TOKENS GENERATED ✅{RESET}{GREEN}║{RESET}")
+    print(f"{GREEN}{'╚' + '═' * 58 + '╝'}{RESET}")
+    
+    # Original token
+    print_section_header("ORIGINAL TOKEN")
+    print_token(login_result['original_token'])
+    
+    # All converted tokens
+    if all_tokens:
+        print_section_header(f"ALL GENERATED TOKENS ({len(all_tokens)} APPS)")
+        
+        for app_name, token_data in all_tokens.items():
+            print_token(token_data, app_name)
+            time.sleep(0.1)
+    
+    # Cookies
+    if login_result.get('cookies'):
+        print_section_header("SESSION COOKIES")
+        print(f"\n{GREEN}{login_result['cookies'][:100]}...{RESET}")
+        if len(login_result['cookies']) > 100:
+            print(f"{GREEN}...{login_result['cookies'][-100:]}{RESET}")
+    
+    # Summary
+    print_section_header("GENERATION SUMMARY")
+    print(f"\n{GREEN}✓ Original Token: {login_result['original_token']['prefix']}{RESET}")
+    print(f"{GREEN}✓ Total Apps: {len(all_tokens)}{RESET}")
+    print(f"{GREEN}✓ Account: {email}{RESET}")
+    print(f"{GREEN}✓ Time: {time.ctime()}{RESET}")
+    
+    # Save option
+    print_section_header("SAVE OPTIONS")
+    choice = input(f"\n{YELLOW}[?] Save all tokens to file? (y/N): {RESET}").strip().lower()
+    
+    if choice == 'y':
+        filename = save_to_file(all_tokens, login_result, email)
+        print(f"\n{GREEN}[✓] All tokens saved to: {CYAN}{filename}{RESET}")
+    
+    # Final message
+    print(f"\n{MAGENTA}{'═' * 60}{RESET}")
+    animated_print(f"{CYAN}🎉 TOKEN GENERATION COMPLETE! 🎉", color=CYAN)
+    animated_print(f"{YELLOW}Thank you for using Token Grenade V7", color=YELLOW)
+    print(f"{MAGENTA}{'═' * 60}{RESET}")
+    
+    # Quick stats
+    print(f"\n{GREEN}📊 Quick Stats:{RESET}")
+    print(f"{CYAN}├─ Total Tokens: {len(all_tokens) + 1}{RESET}")
+    print(f"{CYAN}├─ Original Type: {login_result['original_token']['prefix']}{RESET}")
+    print(f"{CYAN}└─ Generation Time: {time.strftime('%H:%M:%S')}{RESET}")
+    
+    print(f"\n{YELLOW}{'═' * 60}{RESET}")
+    print(f"{GREEN}Made with ❤️ by ALIYA×NADEEM{RESET}")
+    print(f"{YELLOW}{'═' * 60}{RESET}")
 
-    uid_phone_mail = input(GREEN + "ENTER GMAIL\PHONE NOUMBER➠ "  + RESET).strip()
-    print(GREEN + "═" * 62 + RESET) 
+# ==========================================
+# RUN SCRIPT
+# ==========================================
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(f"\n\n{RED}[!] Process interrupted by user{RESET}")
+        print(f"{YELLOW}Thank you for using Token Grenade V7{RESET}")
+    except Exception as e:
+        print(f"\n{RED}[✗] Unexpected error: {e}{RESET}")
     
-    password = input(GREEN + "ENTER PASSWORD➠ "  + RESET).strip()
-    print(GREEN + "═" * 62 + RESET) 
-    
-    fb_login = FacebookLogin(
-        uid_phone_mail=uid_phone_mail,
-        password=password,
-        convert_all_tokens=True
-    )
-    
-    result = fb_login.login()
-    
-    if result['success']:
-        print(GREEN + "\n" + "═" * 62)
-        animated_print(" LOGIN SUCCESSFUL ✅", color=GREEN)
-        print("═" * 62)
-        
-        print(f"\n{YELLOW}TYPE: {RESET}{result['original_token']['token_prefix']}")
-        print(f"{GREEN}{result['original_token']['access_token']}{RESET}")
-        print(GREEN + "═" * 62 + RESET) 
-        
-        if 'converted_tokens' in result and result['converted_tokens']:
-            print(CYAN + "═" * 62)
-            animated_print(" [ SUCCESS ] ALL TOKENS GENERATED ", color=CYAN)
-            print("═" * 62 + RESET)
-            
-            for app_key, token_data in result['converted_tokens'].items():
-                print(f"\n{YELLOW}APP: {app_key} ({token_data['token_prefix']}){RESET}")
-                print(f"{GREEN}{token_data['access_token']}{RESET}")
-                print(GREEN + "═" * 62+ RESET)
-        
-        print("\n" + "═" * 62)
-        animated_print(" COOKIES (NETSCAPE/JSON) ", color=CYAN)
-        print("═" * 62)
-        print(f"{YELLOW}{result['cookies']['string']}{RESET}")
-        print(GREEN + "═" * 62 + RESET)
-        
-    else:
-        print(RED + "\n" + "═" * 62)
-        animated_print(" LOGIN FAILED ", color=RED)
-        print("═" * 62)
-        animated_print(f"Error: {result.get('error')}", color=YELLOW)
-        if result.get('error_user_msg'):
-            animated_print(f"Message: {result.get('error_user_msg')}", color=YELLOW)
-        print(GREEN + "═" * 62 + RESET)
+    # Exit gracefully
+    input(f"\n{BLUE}Press Enter to exit...{RESET}")
