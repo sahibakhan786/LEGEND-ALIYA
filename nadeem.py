@@ -1,91 +1,117 @@
 import os
-import sys
-import time
-import uuid
-import json
 import requests
 import hashlib
+import uuid
+import json
+import time
 import random
 
-# COLORS
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-BLUE = "\033[94m"
-CYAN = "\033[96m"
-RESET = "\033[0m"
+# Color Codes
+Z = "\033[1;30m" # Black
+R = "\033[1;31m" # Red
+G = "\033[1;32m" # Green
+Y = "\033[1;33m" # Yellow
+B = "\033[1;34m" # Blue
+P = "\033[1;35m" # Purple
+C = "\033[1;36m" # Cyan
+W = "\033[1;37m" # White
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def generate_sig(data):
-    """फेसबुक की सुरक्षा को बायपास करने के लिए सिग्नेचर जनरेट करना"""
-    data_str = "".join(f"{k}={v}" for k, v in sorted(data.items()))
-    data_str += "62f8ce9f74b12f84c123cc23437a4a32" # App Secret
-    return hashlib.md5(data_str.encode()).hexdigest()
+def get_sig(params):
+    # FB Signature Algorithm
+    sig = ""
+    for key in sorted(params):
+        sig += f"{key}={params[key]}"
+    sig += "62f8ce9f74b12f84c123cc23437a4a32"
+    return hashlib.md5(sig.encode()).hexdigest()
 
-def get_token():
+def run_script():
     clear()
-    print(f"{CYAN}=================================================={RESET}")
-    print(f"{GREEN}          TOKEN GRENADE V7 - FIX ERROR            {RESET}")
-    print(f"{CYAN}=================================================={RESET}")
+    print(f"{C}==================================================")
+    print(f"{W}       {G}TOKEN GRENADE V7 - ULTIMATE BYPASS{W}         ")
+    print(f"{C}=================================================={W}")
     
-    email = input(f"{YELLOW}[?] Email/Phone: {RESET}").strip()
-    password = input(f"{YELLOW}[?] Password:    {RESET}").strip()
+    uid = input(f"{Y}[?] Email/Phone/UID: {G}")
+    pas = input(f"{Y}[?] Password:         {G}")
     
-    if not email or not password:
-        print(f"{RED}[!] Missing Information!{RESET}")
+    if not uid or not pas:
+        print(f"{R}[!] Details missing!")
         return
 
-    print(f"\n{BLUE}[*] Authorizing with Facebook Servers...{RESET}")
-    
+    print(f"\n{C}[*] Logging in via Secure Tunnel...")
+    time.sleep(1)
+
+    # असली एंड्रॉइड डिवाइस जैसा डेटा
     device_id = str(uuid.uuid4())
     adid = str(uuid.uuid4())
     
-    # यह डेटा सीधे FB Android App से लिया गया है
-    params = {
-        "api_key": "882a8490361da98702bf97a021ddc14d",
-        "credentials_type": "password",
-        "email": email,
-        "format": "json",
-        "generate_machine_id": "1",
-        "generate_session_cookies": "1",
-        "locale": "en_US",
-        "method": "auth.login",
-        "password": password,
-        "return_ssl_resources": "0",
-        "v": "1.0",
+    data = {
         "adid": adid,
+        "format": "json",
         "device_id": device_id,
+        "email": uid,
+        "password": pas,
+        "generate_analytics_claim": "1",
+        "generate_machine_id": "1",
+        "credentials_type": "password",
+        "generate_session_cookies": "1",
+        "api_key": "882a8490361da98702bf97a021ddc14d",
+        "source_machine_id": str(uuid.uuid4()),
+        "method": "auth.login",
+        "contact_point": uid,
+        "advertiser_id": adid,
+        "locale": "en_US",
+        "client_country_code": "US",
+        "v": "1.0"
     }
     
-    params["sig"] = generate_sig(params)
-    
+    data["sig"] = get_sig(data)
+
     headers = {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.181 Mobile Safari/537.36",
+        "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 12; SM-G998B Build/SP1A.210812.016) [FBAN/FB4A;FBAV/369.0.0.18.103;FBPN/com.facebook.katana;FBLC/en_US;FBBV/369000000;FBCR/Verizon;FBMF/samsung;FBBD/samsung;FBDV/SM-G998B;FBSV/12;FBCA/arm64-v8a:;FBDM/{density=3.0,width=1080,height=2280};FB_FW/1;FBRV/0;]",
         "Content-Type": "application/x-www-form-urlencoded",
-        "X-FB-HTTP-Engine": "Liger"
+        "X-FB-HTTP-Engine": "Liger",
+        "X-FB-Connection-Type": "WIFI",
+        "Connection": "Keep-Alive",
+        "Accept-Encoding": "gzip"
     }
 
     try:
-        response = requests.post("https://graph.facebook.com/auth/login", data=params, headers=headers)
-        data = response.json()
+        url = "https://b-api.facebook.com/method/auth.login"
+        req = requests.post(url, data=data, headers=headers).json()
         
-        if "access_token" in data:
-            print(f"\n{GREEN}[✓] SUCCESS! TOKEN FOUND:{RESET}")
-            print(f"{CYAN}{data['access_token']}{RESET}")
+        if "access_token" in req:
+            print(f"\n{G}[✓] LOGIN SUCCESSFUL!")
+            print(f"{W}--------------------------------------------------")
+            print(f"{Y}TOKEN: {C}{req['access_token']}")
+            print(f"{W}--------------------------------------------------")
+            
+            # Cookies extraction
+            cookies = req.get("session_cookies")
+            if cookies:
+                c_str = ";".join([f"{i['name']}={i['value']}" for i in cookies])
+                print(f"{Y}COOKIES: {W}{c_str[:50]}...")
             
             with open("token.txt", "w") as f:
-                f.write(data['access_token'])
-            print(f"\n{BLUE}[i] Saved to token.txt{RESET}")
-            
-        elif "error_msg" in data:
-            print(f"\n{RED}[✗] ERROR: {data['error_msg']}{RESET}")
+                f.write(req['access_token'])
+            print(f"\n{G}[!] Token saved to token.txt")
+
+        elif "error_msg" in req:
+            error = req["error_msg"]
+            if "checkpoint" in error.lower():
+                print(f"\n{R}[✗] ACCOUNT LOCKED (Checkpoint)!")
+                print(f"{Y}ID ब्राउज़र में लॉगिन करें और 'Yes, it was me' पर क्लिक करें।")
+            else:
+                print(f"\n{R}[✗] ERROR: {error}")
         else:
-            print(f"\n{RED}[✗] ERROR: {json.dumps(data, indent=2)}{RESET}")
-            
+            print(f"\n{R}[✗] UNKNOWN ERROR: {json.dumps(req)}")
+
     except Exception as e:
-        print(f"{RED}[!] Connection Failed: {e}{RESET}")
+        print(f"\n{R}[!] Connection Error: {e}")
+
+    input(f"\n{P}Press Enter to exit...")
 
 if __name__ == "__main__":
-    get_token()
+    run_script()
